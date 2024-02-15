@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:photo_displayer/models/photo.dart';
+import 'package:photo_displayer/global/models/photo.dart';
+import 'package:shimmer/shimmer.dart';
 
 class PhotoDetail extends StatefulWidget {
   final Photo photo;
@@ -20,7 +21,8 @@ class _PhotoDetailState extends State<PhotoDetail> {
   }
 
   Future<void> _loadPhoto() async {
-    await Future.delayed(Duration(seconds: 2)); // Simulating photo loading delay
+    await Future.delayed(
+        Duration(seconds: 3)); // Simulating photo loading delay
     setState(() {
       _isLoading = false;
     });
@@ -37,11 +39,21 @@ class _PhotoDetailState extends State<PhotoDetail> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (_isLoading)
-              CircularProgressIndicator()
+              Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * .5,
+                  color: Colors.white,
+                ),
+              )
             else
               Column(
                 children: [
-                  Image.network(widget.photo.url!),
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height * .6,
+                      child: Image.network(widget.photo.url!)),
                   SizedBox(height: 10),
                   Text(widget.photo.title!),
                 ],
