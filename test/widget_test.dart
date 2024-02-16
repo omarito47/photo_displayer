@@ -1,30 +1,42 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:photo_displayer/global/models/photo.dart';
+import 'package:photo_displayer/global/services/api/photo_services.dart';
 import 'package:photo_displayer/main.dart';
+import 'package:photo_displayer/modules/list_photos/widgets/list_photo.dart';
+import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
+
+import 'global/services/api/photo_services_test.mocks.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  final mockClient = MockClient();
+  testWidgets('PhotosList Widget Test', (WidgetTester tester) async {
+    
+    // Build the widget tree
+    await tester.pumpWidget(
+      MaterialApp(
+        home: ChangeNotifierProvider(
+          create: (_) => PhotoServiceProvider(mockClient),
+          child:  PhotosList(),
+        ),
+      ),
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Verify that the widget tree contains the expected widgets
+    expect(find.byType(MyApp), findsOneWidget);
+    
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Perform any interactions or additional assertions as needed
+    // For example, you can simulate scrolling and check if the photos are loaded correctly
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Example: Scroll down and wait for the widget to rebuild
+    // await tester.drag(find.byType(ListView), const Offset(0.0, -500.0));
+    // await tester.pumpAndSettle();
+
+    // // Verify that the photos are loaded
+    // expect(find.byType(Photo), findsNWidgets(10)); // Assuming 10 photos are loaded
+
+    // // Additional test cases can be added to cover different scenarios and behaviors
   });
 }

@@ -1,34 +1,21 @@
-import 'dart:async';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:photo_displayer/global/models/photo.dart';
 import 'package:photo_displayer/global/services/api/photo_services.dart';
-import 'package:photo_displayer/modules/photos/list_photos/widgets/list_photo.dart';
-import 'package:photo_displayer/modules/photos/photo_detail.dart/widgets/photo_detail.dart';
+import 'package:photo_displayer/modules/list_photos/widgets/list_photo.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
-import 'global/connectivity_handler/controller/connectivity_controller.dart';
 
 void main() {
+  final client = http.Client();
   runApp(
     ChangeNotifierProvider(
-      create: (_) => PhotoServiceProvider(),
+      create: (_) => PhotoServiceProvider(client),
       child: const MyApp(),
     ),
   );
 }
-// void main() {
-//   //provider will not handle autommatically update dependents
-//   //if you not see this not an error you can add this line 
-//   Provider.debugCheckInvalidValueType = null;
-//   runApp(
-//     Provider<PhotoServiceProvider>(
-//       create: (_) => PhotoServiceProvider(),
-//       child: const MyApp(),
-//     ),
-//   );
-// }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
