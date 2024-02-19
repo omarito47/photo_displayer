@@ -1,36 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:photo_displayer/modules/list_photos/widgets/list_photo.dart';
+import 'package:photo_displayer/modules/photo_detail.dart/widgets/next_page.dart';
 import 'package:photo_displayer/modules/photo_detail.dart/widgets/photo_detail_card.dart';
 import 'package:photo_displayer/global/models/photo.dart';
 import 'package:photo_displayer/global/services/api/photo_services.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class PhotoDetail extends StatefulWidget {
   final Photo photo;
 
-  PhotoDetail({Key? key, required this.photo}) : super(key: key);
+  const PhotoDetail({Key? key, required this.photo}) : super(key: key);
 
   @override
   State<PhotoDetail> createState() => _PhotoDetailState();
 }
 
 class _PhotoDetailState extends State<PhotoDetail> {
-  bool _isLoading = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadPhoto();
-  }
-
-  Future<void> _loadPhoto() async {
-    await Future.delayed(
-        Duration(seconds: 3)); // Simulating photo loading delay
-    setState(() {
-      _isLoading = false;
-    });
-  }
+  final bool _isLoading = true;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +25,33 @@ class _PhotoDetailState extends State<PhotoDetail> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Photo Detail"),
+        title: const Text("Photo Detail"),
+        actions: [
+          Container(
+            margin:
+                EdgeInsets.only(right: MediaQuery.of(context).size.width * .05),
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NextPage(),
+                    ),
+                  );
+                },
+                child: const Icon(Icons.arrow_forward_rounded)),
+          )
+        ],
+        leading: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PhotosList(),
+                ),
+              );
+            },
+            child: const Icon(Icons.arrow_back_rounded)),
       ),
       body: Center(
         child: FutureBuilder<List<Photo>>(
@@ -55,10 +68,9 @@ class _PhotoDetailState extends State<PhotoDetail> {
                 ),
               );
             } else if (snapshot.hasData) {
-              final photos = snapshot.data!;
-              return buildPhotoDetail(isLoading: _isLoading, widget: widget);
+              return BuildPhotoDetail(isLoading: _isLoading, widget: widget);
             } else {
-              return const Text("No data available");
+              return Placeholder();
             }
           },
         ),

@@ -31,7 +31,7 @@ class AlertDialogWidget {
       actions: <Widget>[
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            primary: Colors.blue, // Set the background color to blue
+            backgroundColor: Colors.blue, 
           ),
           child: Padding(
             padding:

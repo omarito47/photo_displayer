@@ -70,7 +70,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: photoItemCard(photos: photos),
+          body: PhotoItemCard(photos: photos),
         ),
       ),
     );

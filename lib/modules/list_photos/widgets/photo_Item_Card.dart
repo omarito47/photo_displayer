@@ -3,8 +3,8 @@ import 'package:photo_displayer/global/models/photo.dart';
 import 'package:photo_displayer/modules/photo_detail.dart/widgets/photo_detail.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class photoItemCard extends StatelessWidget {
-  const photoItemCard({
+class PhotoItemCard extends StatelessWidget {
+  const PhotoItemCard({
     super.key,
     required this.photos,
   });

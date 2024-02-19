@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:photo_displayer/global/models/photo.dart';
-import 'package:provider/provider.dart';
 
 class PhotoServiceProvider with ChangeNotifier {
   final http.Client _client;
