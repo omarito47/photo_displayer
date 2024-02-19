@@ -32,6 +32,7 @@ Here a demo for the app
 
 
 
-https://github.com/omarito47/photo_displayer/assets/73294872/8f00b832-a091-41c1-a729-20f3ebd0c4ac
+
+https://github.com/omarito47/photo_displayer/assets/73294872/680cb495-49de-474e-aa37-05b65f59069a
 
 
